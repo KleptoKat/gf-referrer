@@ -9,6 +9,7 @@ License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 
 define( 'GF_REFERRER_ADDON_VERSION', '1.0' );
 define( 'REFERRER_COOKIE_NAME', 'referrer_url');
+define( 'SOURCE_COOKIE_NAME', 'source_url');
 
 function get_referrer() {
   $referrer_url = '';
@@ -27,6 +28,7 @@ function get_referrer() {
 }
 
 add_action( 'init', 'set_referrer_cookie' );
+add_action( 'init', 'set_source_cookie' );
 function set_referrer_cookie() {
 
   //exclude AJAX calls and admin pages
@@ -65,7 +67,7 @@ function set_referrer_cookie() {
 
       if (strtolower($referrer_host) !== strtolower($current_host)) {
         if (strtolower($url_parts['host']) !== 'localhost') {
-          error_log("Setting value to cookie: ".$referrer_url);
+          error_log("Setting value to referrer cookie: ".$referrer_url);
           setcookie( REFERRER_COOKIE_NAME, $referrer_url, time() + 30 * DAY_IN_SECONDS, "/", null );
         } else {
           error_log("Cookie not set: Request is from localhost");
@@ -78,6 +80,24 @@ function set_referrer_cookie() {
     }
   }
 
+}
+
+function set_source_cookie() {
+  if (empty($_COOKIE[SOURCE_COOKIE_NAME])) {
+
+    // $host = $_SERVER['HTTP_HOST'];
+    $uri = $_SERVER['REQUEST_URI'];
+
+    //exclude cron job calls
+    if (substr_compare($uri, 'wp-cron.php', 0, 11, true) == 0) {
+      error_log("Cookie not set: Cron job request");
+      return;
+    }
+
+    error_log("Setting value to source cookie: ".$uri);
+    setcookie( SOURCE_COOKIE_NAME, $uri, time() + 30 * DAY_IN_SECONDS, "/", null );
+
+  }
 }
 
 add_action( 'gform_loaded', array( 'GF_Referrer_AddOn_Bootstrap', 'load' ), 5 );
