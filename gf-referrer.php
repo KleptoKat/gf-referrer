@@ -85,17 +85,17 @@ function set_referrer_cookie() {
 function set_source_cookie() {
   if (empty($_COOKIE[SOURCE_COOKIE_NAME])) {
 
-    // $host = $_SERVER['HTTP_HOST'];
-    $uri = $_SERVER['REQUEST_URI'];
+    $host = $_SERVER['HTTP_HOST'];
+    $source = $host . $_SERVER['REQUEST_URI'];
 
     //exclude cron job calls
-    if (substr_compare($uri, '/wp-cron.php', 0, 12, true) == 0) {
+    if (substr_compare($source, $host . '/wp-cron.php', strlen($host), 12, true) == 0) {
       error_log("Cookie not set: Cron job request");
       return;
     }
 
     error_log("Setting value to source cookie: ".$uri);
-    setcookie( SOURCE_COOKIE_NAME, $uri, time() + 30 * DAY_IN_SECONDS, "/", null );
+    setcookie( SOURCE_COOKIE_NAME, $source, time() + 30 * DAY_IN_SECONDS, "/", null );
 
   }
 }
