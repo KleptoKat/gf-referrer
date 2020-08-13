@@ -89,7 +89,7 @@ function set_source_cookie() {
     $uri = $_SERVER['REQUEST_URI'];
 
     //exclude cron job calls
-    if (substr_compare($uri, 'wp-cron.php', 0, 11, true) == 0) {
+    if (substr_compare($uri, '/wp-cron.php', 0, 12, true) == 0) {
       error_log("Cookie not set: Cron job request");
       return;
     }
