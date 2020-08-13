@@ -117,16 +117,8 @@ function set_source_name($atts) {
 		'source' => 'Website',
   ), $atts );
   
-
+  error_log("Source name set to " . $a["source"]);
   $_SESSION[SOURCE_NAME_SESSION_NAME] = $a["source"];
-}
-
-function get_source_name() {
-  if (array_key_exists(SOURCE_NAME_SESSION_NAME, $_SESSION)) {
-    return $_SESSION[SOURCE_NAME_SESSION_NAME];
-  }
-
-  return null;
 }
 
 add_shortcode( 'set_source_name', 'set_source_name' );

@@ -41,7 +41,7 @@ class GF_SourceName_Field extends GF_Field_Hidden {
   *
   */
   public function get_value_save_entry( $value, $form, $input_name, $lead_id, $lead ) {
-    if ((array_key_exists(SOURCE_NAME_SESSION_NAME, $_SESSION)) {
+    if (array_key_exists(SOURCE_NAME_SESSION_NAME, $_SESSION)) {
       return $_SESSION[SOURCE_NAME_SESSION_NAME];
     } else {
       return 'Website';
