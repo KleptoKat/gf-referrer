@@ -64,6 +64,6 @@ class GF_Source_Field extends GF_Field_Hidden {
 
 }
 
-GF_Fields::register( new GF_Referrer_Field() );
+GF_Fields::register( new GF_Source_Field() );
 
 ?>
