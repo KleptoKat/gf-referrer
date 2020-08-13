@@ -26,6 +26,7 @@ class GFReferrerAddOn extends GFAddOn {
     if ( $this->is_gravityforms_supported() && class_exists( 'GF_Field' ) ) {
         require_once( 'includes/class-gfreferrer-field.php' );
         require_once( 'includes/class-gfsource-field.php' );
+        require_once( 'includes/class-gfsourcename-field.php' );
     }
   }
 

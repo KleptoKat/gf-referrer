@@ -2,14 +2,15 @@
 /*
 Plugin Name:  Referrer Field for Gravity Forms
 Description:  A custom field for Gravity Forms that's automatically populated with the referrer URL for the current user
-Version:      1.1.0
+Version:      1.1.1
 License:      GPL2
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 */
 
-define( 'GF_REFERRER_ADDON_VERSION', '1.0' );
+define( 'GF_REFERRER_ADDON_VERSION', '1.1' );
 define( 'REFERRER_COOKIE_NAME', 'referrer_url');
 define( 'SOURCE_COOKIE_NAME', 'source_url');
+define( 'SOURCE_NAME_COOKIE_NAME', 'source_name');
 
 function get_referrer() {
   $referrer_url = '';
@@ -94,7 +95,7 @@ function set_source_cookie() {
       return;
     }
 
-    error_log("Setting value to source cookie: ".$uri);
+    error_log("Setting value to source cookie: ".$source);
     setcookie( SOURCE_COOKIE_NAME, $source, time() + 30 * DAY_IN_SECONDS, "/", null );
 
   }
@@ -110,5 +111,15 @@ class GF_Referrer_AddOn_Bootstrap {
     GFAddOn::register( 'GFReferrerAddOn' );
   }
 }
+
+function set_source_name($atts) {
+	$a = shortcode_atts( array(
+		'source' => 'Website',
+  ), $atts );
+  
+  setcookie( SOURCE_NAME_COOKIE_NAME, $a["source"], time() + 30 * DAY_IN_SECONDS, "/", null );
+}
+
+add_shortcode( 'set_source_name', 'set_source_name' );
 
 ?>
