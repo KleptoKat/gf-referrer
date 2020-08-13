@@ -9,8 +9,8 @@ License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 
 define( 'GF_REFERRER_ADDON_VERSION', '1.1' );
 define( 'REFERRER_COOKIE_NAME', 'referrer_url');
-define( 'SOURCE_COOKIE_NAME', 'source_url');
-define( 'SOURCE_NAME_COOKIE_NAME', 'source_name');
+define( 'SOURCE_SESSION_NAME', 'source_url');
+define( 'SOURCE_NAME_SESSION_NAME', 'source_name');
 
 function get_referrer() {
   $referrer_url = '';
@@ -117,7 +117,16 @@ function set_source_name($atts) {
 		'source' => 'Website',
   ), $atts );
   
-  setcookie( SOURCE_NAME_COOKIE_NAME, $a["source"], time() + 30 * DAY_IN_SECONDS, "/", null );
+
+  $_SESSION[SOURCE_NAME_SESSION_NAME] = $a["source"];
+}
+
+function get_source_name() {
+  if (array_key_exists(SOURCE_NAME_SESSION_NAME, $_SESSION)) {
+    return $_SESSION[SOURCE_NAME_SESSION_NAME];
+  }
+
+  return null;
 }
 
 add_shortcode( 'set_source_name', 'set_source_name' );
