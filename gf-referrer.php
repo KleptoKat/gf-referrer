@@ -2,7 +2,7 @@
 /*
 Plugin Name:  Referrer Field for Gravity Forms
 Description:  A custom field for Gravity Forms that's automatically populated with the referrer URL for the current user
-Version:      1.0.1
+Version:      1.1.0
 License:      GPL2
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 */
