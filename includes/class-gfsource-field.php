@@ -1,6 +1,6 @@
 <?php
 
-class GF_Referrer_Field extends GF_Field_Hidden {
+class GF_Source_Field extends GF_Field_Hidden {
 
   public $type = 'gfsource';
 
