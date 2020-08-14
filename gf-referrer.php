@@ -128,15 +128,4 @@ class GF_Referrer_AddOn_Bootstrap {
   }
 }
 
-function set_source_name($atts) {
-	$a = shortcode_atts( array(
-		'source' => 'Website',
-  ), $atts );
-  
-
-  $_SESSION[SOURCE_NAME_SESSION_NAME] = $a["source"];
-}
-
-add_shortcode( 'set_source_name', 'set_source_name' );
-
 ?>
