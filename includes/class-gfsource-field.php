@@ -41,12 +41,12 @@ class GF_Source_Field extends GF_Field_Hidden {
   *
   */
   public function get_value_save_entry( $value, $form, $input_name, $lead_id, $lead ) {
-    error_log('Reading session --------------------------');
+    error_log('Reading cookie --------------------------');
     $current_url =  "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
     error_log('Current URL: '.$current_url);
-
-    if (isset($_SESSION["source_url"])) {
-      $referrer = $_SESSION["source_url"];
+    error_log("Cookie ".SOURCE_COOKIE_NAME." is set: ". var_export(isset($_COOKIE[SOURCE_COOKIE_NAME]), true));
+    if (isset($_COOKIE[SOURCE_COOKIE_NAME])) {
+      $referrer = $_COOKIE[SOURCE_COOKIE_NAME];
       return $referrer;
     } else {
       return 'Unknown';

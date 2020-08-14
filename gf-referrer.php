@@ -9,6 +9,8 @@ License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 
 define( 'GF_REFERRER_ADDON_VERSION', '1.1' );
 define( 'REFERRER_COOKIE_NAME', 'referrer_url');
+define( 'SOURCE_SESSION_NAME', 'source_url');
+define( 'SOURCE_NAME_SESSION_NAME', 'source_name');
 
 function get_referrer() {
   $referrer_url = '';
@@ -80,23 +82,22 @@ function set_referrer_cookie() {
 
 }
 
-add_action( 'wp', 'set_source_url' );
-function set_source_url() {
-  if (!session_id())
-    session_start();
-
-  if (empty($_SESSION["source_url"])) {
+add_action( 'wp', 'set_source_cookie' );
+function set_source_cookie() {
+  if (empty($_COOKIE[SOURCE_COOKIE_NAME])) {
 
     $host = $_SERVER['HTTP_HOST'];
     $source = $host . $_SERVER['REQUEST_URI'];
 
     //exclude cron job calls
     if (substr_compare($source, $host . '/wp-cron.php', strlen($host), 12, true) == 0) {
-      error_log("Source not set: Cron job request");
+      error_log("Cookie not set: Cron job request");
       return;
     }
 
-    $_SESSION["source_url"] = $source;
+    error_log("Setting value to source cookie: ".$source);
+    setcookie( SOURCE_COOKIE_NAME, $source, time() + 30 * DAY_IN_SECONDS, "/", null );
+
   }
 
   $id = get_the_ID();
@@ -106,7 +107,7 @@ function set_source_url() {
     if ($source_name && source_name[0]) {
       $source_name = $source_name[0];
       error_log("SOURCE NAME CUSTOM FIELD: " . $source_name);
-      $_SESSION["source_name"] = $source_name;
+      setcookie( SOURCE_NAME_SESSION_NAME, $source_name, time() + 30 * DAY_IN_SECONDS, "/", null );
     }
   }
 }
@@ -121,5 +122,16 @@ class GF_Referrer_AddOn_Bootstrap {
     GFAddOn::register( 'GFReferrerAddOn' );
   }
 }
+
+function set_source_name($atts) {
+	$a = shortcode_atts( array(
+		'source' => 'Website',
+  ), $atts );
+  
+
+  $_SESSION[SOURCE_NAME_SESSION_NAME] = $a["source"];
+}
+
+add_shortcode( 'set_source_name', 'set_source_name' );
 
 ?>

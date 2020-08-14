@@ -41,8 +41,13 @@ class GF_SourceName_Field extends GF_Field_Hidden {
   *
   */
   public function get_value_save_entry( $value, $form, $input_name, $lead_id, $lead ) {
-    if (array_key_exists("source_name", $_SESSION)) {
-      return $_SESSION["source_name"];
+    error_log('Reading cookie --------------------------');
+    $current_url =  "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+    error_log('Current URL: '.$current_url);
+    error_log("Cookie ".SOURCE_NAME_SESSION_NAME." is set: ". var_export(isset($_COOKIE[SOURCE_NAME_SESSION_NAME]), true));
+    if (isset($_COOKIE[SOURCE_NAME_SESSION_NAME])) {
+      $referrer = $_COOKIE[SOURCE_NAME_SESSION_NAME];
+      return $referrer;
     } else {
       return 'Website';
     }
