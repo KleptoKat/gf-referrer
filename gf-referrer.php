@@ -82,6 +82,9 @@ function set_referrer_cookie() {
 
 add_action( 'wp', 'set_source_url' );
 function set_source_url() {
+  if (!session_id())
+    session_start();
+
   if (empty($_SESSION["source_url"])) {
 
     $host = $_SERVER['HTTP_HOST'];
