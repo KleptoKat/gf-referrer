@@ -100,7 +100,10 @@ function set_source_cookie() {
     setcookie( SOURCE_COOKIE_NAME, $source, time() + 30 * DAY_IN_SECONDS, "/", null );
 
   }
+}
 
+add_action( 'wp', 'set_source_name' );
+function set_source_name() {
   $id = get_the_ID();
   if ($id) {
     $custom = get_post_custom($id);
@@ -112,6 +115,7 @@ function set_source_cookie() {
     }
   }
 }
+
 
 add_action( 'gform_loaded', array( 'GF_Referrer_AddOn_Bootstrap', 'load' ), 5 );
 class GF_Referrer_AddOn_Bootstrap {
