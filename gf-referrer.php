@@ -9,7 +9,7 @@ License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 
 define( 'GF_REFERRER_ADDON_VERSION', '1.1' );
 define( 'REFERRER_COOKIE_NAME', 'referrer_url');
-define( 'SOURCE_SESSION_NAME', 'source_url');
+define( 'SOURCE_COOKIE_NAME', 'source_url');
 define( 'SOURCE_NAME_SESSION_NAME', 'source_name');
 
 function get_referrer() {
