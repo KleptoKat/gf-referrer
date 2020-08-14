@@ -97,7 +97,7 @@ function set_source_cookie() {
     }
 
     error_log("Setting value to source cookie: ".$source);
-    setcookie( SOURCE_COOKIE_NAME, $source, time() + 30 * DAY_IN_SECONDS, "/", null );
+    setcookie( SOURCE_COOKIE_NAME, $source, time() + 30 * DAY_IN_SECONDS, '/; SameSite=strict' );
 
   }
 }
@@ -111,7 +111,7 @@ function set_source_name() {
     if ($source_name && source_name[0]) {
       $source_name = $source_name[0];
       error_log("SOURCE NAME CUSTOM FIELD: " . $source_name);
-      setcookie( SOURCE_NAME_SESSION_NAME, $source_name, time() + 30 * DAY_IN_SECONDS, "/", null );
+      setcookie( SOURCE_NAME_SESSION_NAME, $source_name, time() + 30 * DAY_IN_SECONDS, '/; SameSite=strict' );
     }
   }
 }
