@@ -80,7 +80,7 @@ function set_referrer_cookie() {
 
 }
 
-add_action( 'init', 'set_source_url' );
+add_action( 'wp', 'set_source_url' );
 function set_source_url() {
   if (empty($_SESSION["source_url"])) {
 
@@ -95,6 +95,17 @@ function set_source_url() {
 
     $_SESSION["source_url"] = $source;
   }
+
+  $id = get_the_ID();
+  if ($id) {
+    $custom = get_post_custom($id);
+    $source_name = $custom["source_name"];
+    if ($source_name && source_name[0]) {
+      $source_name = $source_name[0];
+      error_log("SOURCE NAME CUSTOM FIELD: " . $source_name);
+      $_SESSION["source_name"] = $source_name;
+    }
+  }
 }
 
 add_action( 'gform_loaded', array( 'GF_Referrer_AddOn_Bootstrap', 'load' ), 5 );
@@ -107,16 +118,5 @@ class GF_Referrer_AddOn_Bootstrap {
     GFAddOn::register( 'GFReferrerAddOn' );
   }
 }
-
-function set_source_name($atts) {
-	$a = shortcode_atts( array(
-		'source' => 'Website',
-  ), $atts );
-  
-  error_log("Source name set to " . $a["source"]);
-  $_SESSION["source_name"] = $a["source"];
-}
-
-add_shortcode( 'set_source_name', 'set_source_name' );
 
 ?>
