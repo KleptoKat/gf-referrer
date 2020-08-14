@@ -28,7 +28,6 @@ function get_referrer() {
   return $referrer_url;
 }
 
-add_action( 'init', 'set_referrer_cookie' );
 function set_referrer_cookie() {
 
   //exclude AJAX calls and admin pages
@@ -82,9 +81,11 @@ function set_referrer_cookie() {
 
 }
 
-add_action( 'wp', 'set_source_cookie' );
+add_action( 'init', 'set_source_cookie' );
 function set_source_cookie() {
-  if (empty($_COOKIE[SOURCE_COOKIE_NAME])) {
+
+  set_referrer_cookie();
+  if (!isset($_COOKIE[SOURCE_COOKIE_NAME])) {
 
     $host = $_SERVER['HTTP_HOST'];
     $source = $host . $_SERVER['REQUEST_URI'];
