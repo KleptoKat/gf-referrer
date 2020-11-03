@@ -190,13 +190,16 @@ function gf_referrer_head() {
 
 
     const source_name = document.getElementById('source_name');
-    const source_name_val = decodeURI(source_name.getAttribute('value'));
-    // console.log(source_name_val);
+    if (source_name) {
 
-    const existing_source_name_val = getCookie('$SOURCE_NAME_SESSION_NAME');
-    if (existing_source_name_val == '') {
-      setCookie('$SOURCE_NAME_SESSION_NAME', source_name_val, 180);
+      const source_name_val = decodeURI(source_name.getAttribute('value'));
+      // console.log(source_name_val);
+      const existing_source_name_val = getCookie('$SOURCE_NAME_SESSION_NAME');
+      if (existing_source_name_val == '') {
+        setCookie('$SOURCE_NAME_SESSION_NAME', source_name_val, 180);
+      }
     }
+
 
     const existing_source = getCookie('$SOURCE_COOKIE_NAME');
     if (existing_source == '') {
